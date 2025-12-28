@@ -104,9 +104,13 @@ demo/
 
 The `.env` file is pre-configured with:
 - `GROQ_API_KEY` - Working API key for Groq LLM (real)
-- `GMPAYER_API_KEY` - Mock value for demonstration
-- `USER_WALLET_ADDRESS` - Demo wallet address
-- `PAYMENT_NETWORK` - Demo network (metis)
+- `USER_WALLET_ADDRESS` - User's wallet address (demo)
+- `USER_PRIVATE_KEY` - Private key for signing transactions (mocked)
+- `GMPAYER_CONTRACT_ADDRESS` - x402 smart contract address (demo)
+- `PAYMENT_NETWORK` - Blockchain network (metis)
+- `RPC_ENDPOINT` - Blockchain RPC endpoint
+
+**Note**: GMPayer uses blockchain-based authentication (wallet + smart contract), not Web2 API keys.
 
 ## 📖 Full Architecture
 

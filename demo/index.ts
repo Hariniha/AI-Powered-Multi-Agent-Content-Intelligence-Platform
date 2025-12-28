@@ -37,14 +37,16 @@ interface SettlementReceipt {
 }
 
 class GMPayerClient {
-  private apiKey: string;
   private userWallet: string;
+  private contractAddress: string;
   private network: string;
+  private rpcEndpoint: string;
 
-  constructor(apiKey: string, userWallet: string, network: string) {
-    this.apiKey = apiKey;
+  constructor(userWallet: string, contractAddress: string, network: string, rpcEndpoint: string) {
     this.userWallet = userWallet;
+    this.contractAddress = contractAddress;
     this.network = network;
+    this.rpcEndpoint = rpcEndpoint;
   }
 
   /**
@@ -53,10 +55,11 @@ class GMPayerClient {
    */
   async authorizePayment(estimatedCost: number): Promise<PaymentAuthorization> {
     console.log(`\n💰 [GMPayer] Authorizing payment of $${estimatedCost}`);
-    console.log(`   Locking funds from wallet: ${this.userWallet}`);
+    console.log(`   From wallet: ${this.userWallet}`);
     console.log(`   Network: ${this.network}`);
+    console.log(`   Contract: ${this.contractAddress}`);
     
-    // Simulate network delay
+    // Simulate blockchain transaction delay
     await this.delay(500);
     
     const auth: PaymentAuthorization = {
@@ -251,9 +254,10 @@ async function orchestrateAnalysis(content: string): Promise<OrchestratedResult>
 
   // Step 2: Initialize GMPayer and authorize payment
   const gmPayer = new GMPayerClient(
-    process.env.GMPAYER_API_KEY || "mock_key",
     process.env.USER_WALLET_ADDRESS || "0x742d35Cc...",
-    process.env.PAYMENT_NETWORK || "metis"
+    process.env.GMPAYER_CONTRACT_ADDRESS || "0x1234567890...",
+    process.env.PAYMENT_NETWORK || "metis",
+    process.env.RPC_ENDPOINT || "https://andromeda.metis.io"
   );
 
   const paymentAuth = await gmPayer.authorizePayment(totalCost);
